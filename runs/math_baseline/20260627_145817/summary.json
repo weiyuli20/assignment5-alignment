@@ -1,0 +1,11 @@
+{
+  "n": 5000,
+  "counts": {
+    "F1A1": 133,
+    "F1A0": 718,
+    "F0A0": 4149
+  },
+  "format_rate": 0.1702,
+  "answer_accuracy": 0.0266,
+  "avg_reward": 0.0266
+}
