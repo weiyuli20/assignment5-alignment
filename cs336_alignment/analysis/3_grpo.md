@@ -16,6 +16,9 @@
 \(\left(\sum_{t=0}^T \log\pi_\theta(a_t|s_t)\right) \cdot R(\tau)\)
 
 流程：
+
 单条生成里，每个 token 算 \(\log\pi\)，全部加总；
+
 乘上这条完整句子的总分回报 \(R(\tau)\)；
+
 一批 N 条样本全部累加，除以 N 做平均，得到梯度估计 \(\hat g\)。
