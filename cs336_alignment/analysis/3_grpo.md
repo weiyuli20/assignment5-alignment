@@ -60,7 +60,7 @@ grpo
 
 一个问题采样多条输出，计算每条rollout的奖励  ，然后在组内计算 组归一化奖励
 ​
-1. 实现组归一化奖励
+1. 实现组归一化奖励 
    ```
    uv run pytest -k test_compute_group_normalized_rewards
 ```
@@ -83,5 +83,44 @@ uv run pytest -k test_compute_grpo_clip_loss
 2).无baseline,计算组归一化奖励
 
 3).有baseline ,grpo_clip裁剪方式，计算一个ratio * logprob
+
+```
+uv run pytest -k test_compute_policy_gradient_loss
+
+```
+
+5. mask mean 仅计算相应部分（mask=1）
+```
+uv run pytest -k test_masked_mean
+```
+
+
+6. 计算一个batch的策略梯度损失，反向传播，梯度更新
+```
+uv run pytest -k test_grpo_microbatch_train_step
+```
+计算每条样本的逐token策略梯度损失，然后计算batch 均值，然后反向传播
+
+
+n_grpo_steps: int = 200
+
+rollout_batch_size: int = 256
+
+group_size: int = 8。这三个参数是什么意思呀
+
+rollout_batch_size 一轮采样产出的全部回答总量 256
+
+每条 query 生成 8 个回答（group_size=8），那可以反推出256/8=32条query
+对每组内 8 个回答计算业务奖励
+用组内相对优势更新策略网络（LoRA）
+以上整套操作重复 200 次（n_grpo_steps=200)
+
+
+--model_type qwen2_5-1_5b-instruct \
+    --model_id_or_path qwen/Qwen2.5-1.5B-Instruct \
+
+
+
+
 
 
